@@ -25,8 +25,10 @@ def new_task():
 @app.route('/inspect/<job_id>')
 def inspect(job_id):
     job = Job.fetch(job_id, connection=r)
-    return job.get_status()
-
+    if job.is_finished:
+        return f'Job finished. Return value: {job.result}'
+    else:
+        return f'Result not avaibale yet. Job status: {job.get_status()}'
 
 
 def long_task(n:int):
